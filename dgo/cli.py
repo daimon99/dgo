@@ -103,7 +103,7 @@ def pyenv():
     if pl == 'centos':
         cmd = 'sudo yum install -y gcc openssl-devel bzip2-devel libffi-devel'
     elif pl == 'ubuntu':
-        cmd = 'sudo apt-get install libbz2-dev liblzma-dev libsqlite3-dev libncurses5-dev libgdbm-dev zlib1g-dev libreadline-dev libssl-dev tk-dev uuid-dev libffi-dev'
+        cmd = 'sudo apt-get install -y libbz2-dev liblzma-dev libsqlite3-dev libncurses5-dev libgdbm-dev zlib1g-dev libreadline-dev libssl-dev tk-dev uuid-dev libffi-dev'
         click.secho(u'如果是 Buster 版本，请继续运行：sudo apt-get install libgdbm-compat-dev', fg='yellow')
     elif pl == 'mac':
         cmd = 'brew install tcl-tk'

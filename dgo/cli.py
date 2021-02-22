@@ -1,3 +1,4 @@
+# coding: utf-8
 """Console script for dgo."""
 import sys
 import click
@@ -23,6 +24,23 @@ def upload(local_file_path):
     })
     click.secho('wget %s' % (ret.text.split(':', 1)[1].strip()), fg='cyan')
     return 0
+
+
+@main.command()
+def pipconf():
+    """创建pip 配置文件，使用国内镜像
+    """
+    pip_conf_file_content = """
+[global]
+index-url=https://mirrors.aliyun.com/pypi/simple/
+trusted-host=
+    mirrors.daimon.cc
+    mirrors.cloud.tencent.com
+    mirrors.aliyun.com
+"""
+    with open('/etc/pip.conf', 'w') as fout:
+        fout.write(pip_conf_file_content)
+    click.secho(u'/etc/pip.conf 文件创建成功', fg='green')
 
 
 if __name__ == "__main__":

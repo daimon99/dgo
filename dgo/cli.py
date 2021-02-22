@@ -43,5 +43,17 @@ trusted-host=
     click.secho(u'/etc/pip.conf 文件创建成功', fg='green')
 
 
+@main.command()
+def goenv():
+    """go 国内镜像"""
+    content = u"""
+go env -w GO111MODULE=on
+go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
+# go 官方
+# go env -w  GOPROXY=https://goproxy.io,direct
+"""
+    click.secho(content, fg='cyan')
+
+
 if __name__ == "__main__":
     sys.exit(main())  # pragma: no cover

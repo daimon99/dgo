@@ -98,6 +98,7 @@ def pyenv():
         click.secho(u'现在开始安装 pyenv 环境...', fg='cyan')
         cmd = "curl http://file.daimon.cc/group1/M00/00/11/oYYBAGARMEaAc51mAAABLdrf0TM30.html | bash"
         os.system(cmd)
+        
     click.secho(u'安装 python 依赖...;', fg='cyan')
     pl = get_platform()
     if pl == 'centos':

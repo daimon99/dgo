@@ -124,12 +124,12 @@ env \\
         click.secho(u'现在开始安装 python 2.7.18 环境 ...')
         os.system(
             'mkdir -p ~/.pyenv/cache && cd ~/.pyenv/cache && wget --content-disposition http://file.daimon.cc/group1/M00/00/0B/oYYBAF9xSdeAKkoMAMQl0AMemAM1710.xz?filename=Python-2.7.18.tar.xz')
-        os.system('pyenv install 2.7.18')
+    os.system('pyenv install 2.7.18')
     if not os.path.exists(os.path.expanduser('~/.pyenv/cache/Python-3.8.6.tar.xz')):
         click.secho(u'现在开始安装 python 3.8.6 环境 ...')
         os.system(
             'mkdir -p ~/.pyenv/cache && cd ~/.pyenv/cache && wget --content-disposition http://file.daimon.cc/group1/M00/00/0D/oYYBAF_VbI6AdPRMARY6CAOTD6M0836.xz?filename=Python-3.8.6.tar.xz')
-        os.system('pyenv install 3.8.6')
+    os.system('pyenv install 3.8.6')
 
 
 @main.command()

@@ -1,8 +1,10 @@
 # coding: utf-8
 """Console script for dgo."""
 import sys
+import os
 import click
 import requests
+import subprocess
 
 
 @click.group()
@@ -24,6 +26,14 @@ def upload(local_file_path):
     })
     click.secho('wget %s' % (ret.text.split(':', 1)[1].strip()), fg='cyan')
     return 0
+
+
+@main.command()
+@click.argument('url')
+def wget(url):
+    """wget with usual params."""
+    cmd = "wget --content-disposition \"%s\"" % url
+    os.system(cmd)
 
 
 @main.command()

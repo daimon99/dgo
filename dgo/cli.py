@@ -54,6 +54,32 @@ trusted-host=
 
 
 @main.command()
+def pypirc():
+    """pypirc配置文件"""
+    pypirc_path = os.path.expanduser('~/.pypirc')
+    if os.path.exists(pypirc_path):
+        click.secho('~/.pypirc 文件已经存在', fg='red')
+        return 1
+
+    content = """
+[distutils]
+index-servers =
+    pypi
+
+[pypi]
+repository: https://upload.pypi.org/legacy/
+username: %s
+password: %s
+"""
+    username = click.prompt('username in pypi: ')
+    password = click.prompt('password in pypi: ', hide_input=True)
+    content = content % (username, password)
+    with open(pypirc_path, 'w') as fout:
+        fout.write(content)
+    click.secho('~/.pypirc 生成完毕。', fg='green')
+
+
+@main.command()
 def goenv():
     """go 国内镜像"""
     content = u"""

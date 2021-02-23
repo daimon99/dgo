@@ -4,6 +4,20 @@ import sys
 import os
 import click
 import requests
+import platform
+
+
+def get_platform():
+    pl = platform.platform().lower()
+    if 'ubuntu' in pl:
+        return 'ubuntu'
+    elif 'centos' in pl:
+        return 'centos'
+    elif 'darwin' in pl or 'mac' in pl:
+        return 'mac'
+    else:
+        return 'others'
+
 
 @click.group()
 def main(args=None):
@@ -75,6 +89,56 @@ password: %s
     with open(pypirc_path, 'w') as fout:
         fout.write(content)
     click.secho(u'~/.pypirc 生成完毕。', fg='green')
+
+
+@main.command()
+def pyenv():
+    """安装 pyenv 环境（当前账号）"""
+    if not os.path.exists(os.path.expanduser('~/.pyenv')):
+        click.secho(u'现在开始安装 pyenv 环境...', fg='cyan')
+        cmd = "curl http://file.daimon.cc/group1/M00/00/11/oYYBAGARMEaAc51mAAABLdrf0TM30.html | bash"
+        os.system(cmd)
+    with open(os.path.expanduser('~/.pyenv_profile'), 'w') as fout:
+        fout.write("""
+# User specific aliases and functions
+export PATH="~/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+""")
+
+    click.secho(u'安装 python 依赖...;', fg='cyan')
+    pl = get_platform()
+    if pl == 'centos':
+        cmd = 'sudo yum install -y gcc openssl-devel bzip2-devel libffi-devel'
+    elif pl == 'ubuntu':
+        cmd = 'sudo apt-get install -y libbz2-dev liblzma-dev libsqlite3-dev libncurses5-dev libgdbm-dev zlib1g-dev libreadline-dev libssl-dev tk-dev uuid-dev libffi-dev'
+        click.secho(u'如果是 Buster 版本，请继续运行：sudo apt-get install libgdbm-compat-dev', fg='yellow')
+    elif pl == 'mac':
+        cmd = 'brew install tcl-tk'
+        click.secho(u'''mac如果要用tcl，编译的时候要用下面的命令:
+env \\
+  PATH="$(brew --prefix tcl-tk)/bin:$PATH" \\
+  LDFLAGS="-L$(brew --prefix tcl-tk)/lib" \\
+  CPPFLAGS="-I$(brew --prefix tcl-tk)/include" \\
+  PKG_CONFIG_PATH="$(brew --prefix tcl-tk)/lib/pkgconfig" \\
+  CFLAGS="-I$(brew --prefix tcl-tk)/include" \\
+  PYTHON_CONFIGURE_OPTS="--with-tcltk-includes='-I$(brew --prefix tcl-tk)/include' --with-tcltk-libs='-L$(brew --prefix tcl-tk)/lib -ltcl8.6 -ltk8.6'" \\
+  pyenv install 3.8.1
+    ''')
+    else:
+        cmd = 'echo "无法识别的操作系统版本"'
+    os.system(cmd)
+    if not os.path.exists(os.path.expanduser('~/.pyenv/cache/Python-2.7.18.tar.xz')):
+        click.secho(u'现在开始安装 python 2.7.18 环境 ...')
+        os.system(
+            'mkdir -p ~/.pyenv/cache && cd ~/.pyenv/cache && wget --content-disposition http://file.daimon.cc/group1/M00/00/0B/oYYBAF9xSdeAKkoMAMQl0AMemAM1710.xz?filename=Python-2.7.18.tar.xz')
+    os.system('. ~/.pyenv_profile && pyenv install 2.7.18')
+    if not os.path.exists(os.path.expanduser('~/.pyenv/cache/Python-3.8.6.tar.xz')):
+        click.secho(u'现在开始安装 python 3.8.6 环境 ...')
+        os.system(
+            'mkdir -p ~/.pyenv/cache && cd ~/.pyenv/cache && wget --content-disposition http://file.daimon.cc/group1/M00/00/0D/oYYBAF_VbI6AdPRMARY6CAOTD6M0836.xz?filename=Python-3.8.6.tar.xz')
+    os.system('. ~/.pyenv_profile && pyenv install 3.8.6')
 
 
 @main.command()

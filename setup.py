@@ -50,6 +50,10 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/daimon99/dgo',
+<<<<<<< HEAD
     version='0.5.0',
+=======
+    version='0.6.3',
+>>>>>>> 8f570a89628a3c60f8d1e8c019fdb3f4fccaf27b
     zip_safe=False,
 )

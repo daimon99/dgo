@@ -89,7 +89,6 @@ password: %s
     with open(pypirc_path, 'w') as fout:
         fout.write(content)
     click.secho(u'~/.pypirc 生成完毕。', fg='green')
-<<<<<<< HEAD
 
 
 @main.command()

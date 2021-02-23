@@ -53,7 +53,7 @@ setup(
 <<<<<<< HEAD
     version='0.5.0',
 =======
-    version='0.6.3',
+    version='0.6.4',
 >>>>>>> 8f570a89628a3c60f8d1e8c019fdb3f4fccaf27b
     zip_safe=False,
 )
